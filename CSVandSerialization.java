@@ -60,10 +60,9 @@ public class CSVandSerialization
                 for(int i = 0; i < list.size(); i++)
                     System.out.println(list.get(i));
             else if(!entry.equals("")){
-                String line = userInput.nextLine();
-                String firstName = line.substring(0, line.indexOf(","));
-                String lastName = line.substring(line.indexOf(",") + 1, line.lastIndexOf(","));
-                String DOB = line.substring(line.lastIndexOf(",") + 1);
+                String firstName = entry.substring(0, entry.indexOf(","));
+                String lastName = entry.substring(entry.indexOf(",") + 1, entry.lastIndexOf(","));
+                String DOB = entry.substring(entry.lastIndexOf(",") + 1);
                 firstName.trim();
                 lastName.trim();
                 DOB.trim();
