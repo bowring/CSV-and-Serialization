@@ -48,15 +48,18 @@ public class CSVandSerialization
         FileOutputStream finalFile = new FileOutputStream("People");
         PrintWriter fileWriter = new PrintWriter(finalFile);
         for(int i = 0; i < list.size(); i++)
-            fileWriter.print(list.get(i).getFirstName() + ", "
+            fileWriter.println(list.get(i).getFirstName() + ", "
                 + list.get(i).getLastName() + ", " + list.get(i).getDOB());
         fileWriter.close();
     }
 
     //gets more people from user
     public static void getPeople(String entry, Scanner userInput, ArrayList<Person> list){
-        while(!entry.equals("q")){
-            if(!entry.equals("")){
+        while(!entry.equals("q")){            
+            if(entry.equals("a"))
+                for(int i = 0; i < list.size(); i++)
+                    System.out.println(list.get(i));
+            else if(!entry.equals("")){
                 String line = userInput.nextLine();
                 String firstName = line.substring(0, line.indexOf(","));
                 String lastName = line.substring(line.indexOf(",") + 1, line.lastIndexOf(","));
@@ -66,10 +69,7 @@ public class CSVandSerialization
                 DOB.trim();
                 list.add(new Person(firstName, lastName, DOB));
             }
-            if(entry.equals("a"))
-                for(int i = 0; i < list.size(); i++)
-                    System.out.println(list.get(i));
-            System.out.println("To add new people enter people in the form first name, last name, DOB or enter q to quit");
+            System.out.println("To add new people enter people in the form \"first name, last name, DOB\", enter q to quit");
             System.out.println("To see current people on file enter a :" );
             entry = userInput.nextLine();
         }
