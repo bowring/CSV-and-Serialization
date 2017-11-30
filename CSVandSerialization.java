@@ -28,23 +28,15 @@ public class CSVandSerialization
     }
 
     //returns list of persons
-    public static ArrayList<Person> getList(Scanner fileScanner){
+    static ArrayList<Person> getList(Scanner fileScanner){
         ArrayList<Person> list = new ArrayList<>();
-        while(fileScanner.hasNextLine()){
-            String line = fileScanner.nextLine();
-            String firstName = line.substring(0, line.indexOf(","));
-            String lastName = line.substring(line.indexOf(",") + 1, line.lastIndexOf(","));
-            String DOB = line.substring(line.lastIndexOf(",") + 1);
-            firstName.trim();
-            lastName.trim();
-            DOB.trim();
-            list.add(new Person(firstName, lastName, DOB));
-        }
+        while(fileScanner.hasNextLine())
+            list.add(getPerson(fileScanner.nextLine()));
         return list;
     }
 
     //makes list of persons on file
-    public static void makeList(ArrayList<Person> list) throws Exception{
+    static void makeList(ArrayList<Person> list) throws Exception{
         FileOutputStream finalFile = new FileOutputStream("People");
         PrintWriter fileWriter = new PrintWriter(finalFile);
         for(int i = 0; i < list.size(); i++)
@@ -54,23 +46,23 @@ public class CSVandSerialization
     }
 
     //gets more people from user
-    public static void getPeople(String entry, Scanner userInput, ArrayList<Person> list){
+    static void getPeople(String entry, Scanner userInput, ArrayList<Person> list){
         while(!entry.equals("q")){            
             if(entry.equals("a"))
                 for(int i = 0; i < list.size(); i++)
                     System.out.println(list.get(i));
-            else if(!entry.equals("")){
-                String firstName = entry.substring(0, entry.indexOf(","));
-                String lastName = entry.substring(entry.indexOf(",") + 1, entry.lastIndexOf(","));
-                String DOB = entry.substring(entry.lastIndexOf(",") + 1);
-                firstName.trim();
-                lastName.trim();
-                DOB.trim();
-                list.add(new Person(firstName, lastName, DOB));
-            }
-            System.out.println("To add new people enter people in the form \"first name, last name, DOB\", enter q to quit");
-            System.out.println("To see current people on file enter a :" );
+            else if(!entry.equals(""))
+                list.add(getPerson(entry));
+            System.out.println("To add new people enter people in the form \"first name, last name, DOB\", enter q to quit,");
+            System.out.println("or to  see current people on file enter a:" );
             entry = userInput.nextLine();
         }
+    }
+
+    static Person getPerson(String entry){
+        String firstName = entry.substring(0, entry.indexOf(",")).trim();
+        String lastName = entry.substring(entry.indexOf(",") + 1, entry.lastIndexOf(",")).trim();
+        String DOB = entry.substring(entry.lastIndexOf(",") + 1).trim();
+        return new Person(firstName, lastName, DOB);
     }
 }
